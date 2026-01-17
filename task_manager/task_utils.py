@@ -30,22 +30,24 @@ def mark_task_as_complete(index, tasks=tasks):
     
 # Implement view_pending_tasks function
 def view_pending_tasks(tasks=tasks):
-    print(tasks)
     counter = 0
     for el in tasks:
-        if el["completed"] == 'False':
+        # if el["completed"] == 'False':
+        if el["completed"] == 'True':
             counter += 1 
-    print(counter)
+    return(counter/len(tasks)*100)
 
 # Implement calculate_progress function
 def calculate_progress(tasks=tasks):
-    print(tasks)
-    progress = 0
+    # print(tasks)
+    counter = 0
     for el in tasks:
-        if el["completed"] == 'True': 
-            progress += 1
-    print(progress)
-    return progress
+        # if el["completed"] == 'False':
+        if el["completed"] == True:
+            counter += 1 
+    part = counter
+    whole = len(tasks)
+    return((part/whole)*100)
 
 ############################
 # task = 
