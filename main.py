@@ -21,9 +21,21 @@ def main():
         choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
-            title = input('Please specify a title for your new task: ')
-            description = input('Please specify a description for your new task: ')
-            
+            title = input('Please specify a title for your new task: ').strip()
+
+            # Description with validation loop
+            while True:
+                description = input('Please specify a description for your new task: ').strip()
+                try:
+                    if validate_task_description(description):
+                        break
+                    else:
+                        print("Description not accepted (too short/empty/invalid format). Please try again.")
+                except Exception as e:
+                    print(f"Error validating description: {e}")
+                    print("Please try again.")
+
+            # Due date with validation loop
             while True:
                 try:
                     year  = int(input('Please specify the year of the due date: '))
@@ -33,25 +45,32 @@ def main():
                 except ValueError:
                     print("Sorry, wrong date format - please use numbers only.")
                     continue
+
                 if validate_due_date(due_date):
                     break
                 else:
-                    print(f'Due date not accepted - please specify another!')
-            # new_task = { "title": title, "description": description, "due_date": due_date, "completed": False }
-            # add_task(new_task)
+                    print("Due date not accepted (past date or invalid) - please specify another!")
+
+            # Add the task
             add_task(title, description, due_date)
+            print("Task added successfully!")
+
         elif choice == "2":
-            task_marked_completed = input('Please specify the task that you you want to mark as completed?')
-            mark_task_as_complete(task_marked_completed)
+            task_identifier = input('Please specify the task title or ID to mark as completed: ').strip()
+            mark_task_as_complete(task_identifier)
+
         elif choice == "3":
             view_pending_tasks()
+
         elif choice == "4":
             calculate_progress()
+
         elif choice == "5":
             print("Exiting the program...")
             break
+
         else:
-            print("Invalid choice. Please try again.")
+            print("Invalid choice. Please enter a number between 1 and 5.")
         
 if __name__ == "__main__":
     main()
